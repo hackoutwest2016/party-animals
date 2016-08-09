@@ -4,7 +4,6 @@ export function say(whatToSay, config) {
     let selectedVoice = window.speechSynthesis
           .getVoices()
           .filter(function(voice) {
-            console.log(voice)
              return config.lang.includes(voice.lang);
           })
           .pop();

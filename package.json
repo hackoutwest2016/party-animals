@@ -5,6 +5,7 @@
     "start": "meteor run --settings settings.json"
   },
   "dependencies": {
+    "annyang": "^2.4.0",
     "meteor-node-stubs": "~0.2.0"
   }
 }
