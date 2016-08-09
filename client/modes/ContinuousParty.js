@@ -1,4 +1,3 @@
-import { say } from "../utils/say";
 import { Recognizer } from "../utils/recognizer";
 import  AudioPlayer from "../utils/AudioPlayer";
 import { levenshteinDistance as stringDistance } from "../utils/string-distance";
@@ -62,7 +61,7 @@ export class ContinuousParty {
     _onSongFinished() {
         console.debug("SONG FINISHED WITHOUT CORRECT ANSWER");
         this.recognizer.stopListening();
-        
+
         say("You failed, the correct answer was " + this.currentQuestion.answer, this.piximal);
         setTimeout(() => this._startNextQuestion(), 600);
     }

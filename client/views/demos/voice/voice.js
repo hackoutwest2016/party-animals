@@ -1,18 +1,9 @@
 import { Template } from 'meteor/templating';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { ContinuousParty } from '../../../modes/ContinuousParty';
-new ContinuousParty([{artist: "hej", song: "https://p.scdn.co/mp3-preview/a2a9c13416fc981d035e75f16ec63b0d8e6486ba"}]).start();
+//new ContinuousParty([{artist: "hej", song: "https://p.scdn.co/mp3-preview/a2a9c13416fc981d035e75f16ec63b0d8e6486ba"}]).start();
 
 import './voice.html';
-
-const CONFIG = {
-  lang:"en_US",
-  lang2:"en-US",
-  pitch: 2,
-  rate: 0.85
-}
-
-window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition  || null;
 
 Template.voice.onCreated(function voiceOnCreated() {
   this.status = new ReactiveVar('Stopped');

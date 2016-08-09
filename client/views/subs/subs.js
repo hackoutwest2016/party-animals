@@ -1,6 +1,5 @@
 import { Template } from 'meteor/templating';
 import { ReactiveVar } from 'meteor/reactive-var';
-import { say as soundSay } from "../../utils/say";
 
 Template.subs.onCreated(function speechOnCreated() {
   this.subs = new ReactiveVar([]);
@@ -58,8 +57,8 @@ function say(whatToSay, onSoundFinished) {
 
 function displaySay(whatToSay) {
     const apa = document.getElementById("subs-space");
-    if (!apa) { 
-        console.log(":DSADSAKD:K"); 
+    if (!apa) {
+        console.log(":DSADSAKD:K");
         setTimeout(() => displaySay(whatToSay),1);
         return;
     }

@@ -1,5 +1,4 @@
 import { levenshteinDistance } from "../utils/string-distance";
-import { say } from "../utils/say";
 
 export const commands = {
   "penis": penis,
@@ -12,14 +11,14 @@ export const commands = {
 }
 
 function penis(config) {
-    say("Your best friend is a penis", config);
+    say("Your best friend is a penis");
 }
 
 export function tryFindCommand(candidateKey) {
     const unsortedDistances = calculateDistanceToEachCommand(commands, candidateKey);
     const sortedDistances = unsortedDistances.sort((a,b) => a.distance - b.distance);
     const mostLikelyCandidate = sortedDistances[0];
-  
+
     //console.debug("Distances to", candidateKey, sortedDistances, mostLikelyCandidate);
     if (mostLikelyCandidate.distance <= 3) {
         return commands[mostLikelyCandidate.command]

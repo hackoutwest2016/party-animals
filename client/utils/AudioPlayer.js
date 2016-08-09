@@ -35,7 +35,7 @@ export default class AudioPlayer {
   _increaseVolume(cb) {
     const newVol = this.audioTag.volume + 0.01;
     if (newVol <= 1) {
-      this.audioTag.volume += 0.01;
+      this.audioTag.volume = newVol;
     }
     if (this.audioTag.volume <= 0.95) {
       this.increaseTimeout = setTimeout(() => {
