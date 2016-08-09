@@ -3,7 +3,7 @@ import { ReactiveVar } from 'meteor/reactive-var';
 import { SongAnswerMode } from "../../modes/song-answer";
 import './speech.html';
 
-new SongAnswerMode().start();
+//new SongAnswerMode().start();
 
 import AudioPlayer from "../../utils/AudioPlayer";
 
