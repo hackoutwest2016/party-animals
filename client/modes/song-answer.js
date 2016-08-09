@@ -52,27 +52,14 @@ export class SongAnswerMode {
     }
 
     _startQuestion(q) {
-        //const onEnd = () => { console.log("hej"); setTimeout(q.start.bind(q), 600)};
-        let onEnd = console.log; // works 5/5 times
-        onEnd = function () { return console.log; }; // does not work
-        onEnd = function () {console.log("hej"); }; // works 1/5 times
-        onEnd = this._fuckMe;
-        onEnd = () => {this._fuckMe();};
-
-        console.log("THIS", this);
+        const onEnd = () => setTimeout(q.start.bind(q), 600);
         if (q == this.questions[0]) {
-            say("HELLO! FIRST QUESTION", this.config, onEnd);
+            say("HELLO! FIRST QUESTION", this.config, onEnd.bind(this));
         } else {
-            say("Okay, next question!", this.config, onEnd);
+            say("Okay, next question!", this.config, onEnd.bind(this));
         }
     }
-
-    _fuckMe() {
-        console.log("FUCL");
-        //setTimeout(q.start.bind(q), 600);
-    }
 }
-
 
 class SongAnswerQuestion {
     constructor(currentQuestion, config, recognizer, audioPlayer, onQuestionFinished) {

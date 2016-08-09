@@ -7,12 +7,10 @@ export function say(whatToSay, config, onEnd) {
              return config.lang.includes(voice.lang);
           })
           .pop();
-    if (!selectedVoice) {
-        console.error("Found no voice matching", config, "The available voices are", window.speechSynthesis.getVoices());
-        return;
-    }
 
-    let utterance = new SpeechSynthesisUtterance();
+    if (selectedVoice) {
+        console.log("GO", onEnd);
+        let utterance = new SpeechSynthesisUtterance();
         utterance.text = whatToSay;
         utterance.voice = selectedVoice;
         utterance.lang = selectedVoice.lang;
@@ -20,7 +18,11 @@ export function say(whatToSay, config, onEnd) {
         utterance.pitch = config.pitch;
 
         utterance.addEventListener('start', config.onStart);
+
         utterance.addEventListener('end', onEnd);
 
-    speechSynthesis.speak(utterance);
+        speechSynthesis.speak(utterance);
+    } else {
+        console.error("Found no voice matching", config, "The available voices are", window.speechSynthesis.getVoices());
+    }
 }
