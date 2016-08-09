@@ -23,6 +23,11 @@ export class SongAnswerMode {
         });
 
         this.currentQuestion = -1
+
+        this.start = this.start.bind(this)
+        this.stop = this.stop.bind(this)
+        this._startNextQuestion = this._startNextQuestion.bind(this)
+        this._startQuestion = this._startQuestion.bind(this)
     }
 
     start() {
@@ -50,7 +55,7 @@ export class SongAnswerMode {
         //const onEnd = () => { console.log("hej"); setTimeout(q.start.bind(q), 600)};
         let onEnd = console.log; // works 5/5 times
         onEnd = function () { return console.log; }; // does not work
-        onEnd = function () {console.log("hej"); }; // works 1/5 times 
+        onEnd = function () {console.log("hej"); }; // works 1/5 times
         onEnd = this._fuckMe;
         onEnd = () => {this._fuckMe();};
 
