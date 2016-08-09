@@ -60,7 +60,7 @@ function displaySay(whatToSay) {
     const apa = document.getElementById("subs-space");
     if (!apa) { 
         console.log(":DSADSAKD:K"); 
-        setTimeout(() => displaySay(whatToSay, 1));
+        setTimeout(() => displaySay(whatToSay),1);
         return;
     }
     const child = document.createElement("div");
