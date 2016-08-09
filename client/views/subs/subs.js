@@ -57,7 +57,13 @@ function say(whatToSay, onSoundFinished) {
 }
 
 function displaySay(whatToSay) {
-    const a = Template.instance().subs.get();
-    a.push(whatToSay);
-    Template.instance().subs.set(a);
+    const apa = document.getElementById("subs-space");
+    if (!apa) { 
+        console.log(":DSADSAKD:K"); 
+        setTimeout(() => displaySay(whatToSay, 1));
+        return;
+    }
+    const child = document.createElement("div");
+    child.appendChild(document.createTextNode(whatToSay));
+    apa.appendChild(child);
 }
