@@ -9,7 +9,7 @@ const CONFIG = {
   rate: 0.85
 }
 
-Template.voice.onCreated(() => {
+Template.voice.onCreated(function voiceOnCreated() {
   this.status = new ReactiveVar('Stopped');
 });
 

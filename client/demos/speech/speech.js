@@ -5,7 +5,7 @@ import './speech.html';
 
 window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition  || null;
 
-Template.speech.onCreated(() => {
+Template.speech.onCreated(function speechOnCreated() {
   this.status = new ReactiveVar('Stopped');
   this.transcription = new ReactiveVar('');
 
@@ -28,7 +28,6 @@ Template.speech.helpers({
 
 Template.speech.events({
   'click [data-speech-listen]'(event, instance) {
-
     instance.recognizer.start();
   },
   'click [data-voice-stop]'(event, instance) {
