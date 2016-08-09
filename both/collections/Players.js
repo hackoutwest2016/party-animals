@@ -10,3 +10,8 @@ Players.attachSchema(new SimpleSchema({
     label: "keywords"
   }
 }));
+
+
+if(Meteor.isClient) {
+  window.Players = Players
+}

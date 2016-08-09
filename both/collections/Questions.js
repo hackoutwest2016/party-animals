@@ -1,17 +1,12 @@
 export const Questions = new Mongo.Collection("Questions");
 
 Questions.attachSchema(new SimpleSchema({
-  type: {
-    type: String,
-    allowedValues: ['song', 'text'],
-    label: "name"
-  },
   question: {
-    type: [Object],
+    type: String,
     label: "question"
   },
   answer: {
-    type: [Object],
+    type: String,
     label: "answer"
   },
   song: {
@@ -19,3 +14,8 @@ Questions.attachSchema(new SimpleSchema({
     label: "song"
   }
 }));
+
+
+if(Meteor.isClient) {
+  window.Questions = Questions
+}

@@ -1,21 +1,17 @@
 export const Animals = new Mongo.Collection("Animals");
 
 Animals.attachSchema(new SimpleSchema({
-  voiceConfig: {
-    type: Object,
-  },
-  "voiceConfig.$.lang": {
-    type: Array,
+  "voices": {
+    type: [String],
     label: "language"
   },
-  "voiceConfig.$.lang.$": {
-    type: String,
+  "pitch": {
+    type: Number,
+    decimal: true
   },
-  "voiceConfig.$.pitch": {
-    type: Number
-  },
-  "voiceConfig.$.rate": {
-    type: Number
+  "rate": {
+    type: Number,
+    decimal: true
   },
   name: {
     type: String,
@@ -34,3 +30,7 @@ Animals.attachSchema(new SimpleSchema({
     optional: true
   }
 }));
+
+if(Meteor.isClient) {
+  window.Animals = Animals
+}
