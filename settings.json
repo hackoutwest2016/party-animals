@@ -1,0 +1,12 @@
+{
+  "spotify": {
+    "clientId": "b7a5e1a11be94ed7b9a7bb20cf114134",
+    "secret": "d4b9fff8c63f4c8da629442ee3f0088b"
+  },
+  "public": {
+    "google": {
+      "speechKey": "AIzaSyB3iPrkxFhy7d5SkgZgRzmvUkpURaXo5OE"
+    }
+  }
+
+}
