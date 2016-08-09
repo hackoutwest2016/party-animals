@@ -3,8 +3,7 @@ export default class AudioPlayer {
     this.isPlaying = false
     this.audioSrc = ''
     this.audioTag = new Audio()
-    this.audioTag.loop = true
-    this.audioTag.volume = 0
+    this.currentTime = 0
     this.decreaseTimeout = this.increaseTimeout = false;
 
     this._decreaseVolume = this._decreaseVolume.bind(this)
@@ -50,10 +49,11 @@ export default class AudioPlayer {
 
   _doPause() {
     this.isPlaying = false
+    this.audioTag.onended = null;
     this.audioTag.pause();
   }
 
-  play(newAudioSrc) {
+  play(newAudioSrc, cb) {
     if (!this.audioSrc && !newAudioSrc) return new Error('missing audio source :(..')
 
     if (this.isPlaying) {
@@ -65,6 +65,8 @@ export default class AudioPlayer {
       this._doPlay(newAudioSrc || this.audioSrc);
       this._increaseVolume()
     }
+
+    this.audioTag.onended = cb;
   }
 
   pause() {
