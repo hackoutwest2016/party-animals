@@ -64,6 +64,7 @@ export class ContinuousParty {
         this.recognizer.stopListening();
         
         say("You failed, the correct answer was " + this.currentQuestion.answer, this.piximal);
+        setTimeout(() => this._startNextQuestion(), 600);
     }
 
     _startListeningForAnswers() {
