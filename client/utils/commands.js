@@ -21,7 +21,7 @@ export function tryFindCommand(candidateKey) {
     const mostLikelyCandidate = sortedDistances[0];
   
     console.debug("Distances to", candidateKey, sortedDistances, mostLikelyCandidate);
-    if (mostLikelyCandidate.distance < 8) {
+    if (mostLikelyCandidate.distance <= 4) {
         return commands[mostLikelyCandidate.command]
     } else {
         return null;

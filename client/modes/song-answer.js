@@ -16,7 +16,7 @@ export class SongAnswerMode {
     }
 
     start() {
-        //this.recognizer.startListening(this.checkInput);
+        this.recognizer.startListening(this.checkInput);
         this.checkInput("the killers");
     }
 

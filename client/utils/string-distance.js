@@ -1,4 +1,9 @@
+import apa from "fast-levenshtein";
+
 export function levenshteinDistance(s, t) {
+    return apa.get(s, t);
+}
+export function llevenshteinDistance(s, t) {
     if (!s.length) return t.length;
     if (!t.length) return s.length;
 

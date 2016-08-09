@@ -6,6 +6,7 @@
   },
   "dependencies": {
     "annyang": "^2.4.0",
+    "fast-levenshtein": "^1.1.4",
     "meteor-node-stubs": "~0.2.0"
   }
 }
