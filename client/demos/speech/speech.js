@@ -8,10 +8,21 @@ import './speech.html';
 import AudioPlayer from "../../utils/AudioPlayer";
 
 
-// let a = new AudioPlayer();
+let a = new AudioPlayer();
 
-// a.play('https://p.scdn.co/mp3-preview/a2a9c13416fc981d035e75f16ec63b0d8e6486ba')
+a.play('https://p.scdn.co/mp3-preview/a2a9c13416fc981d035e75f16ec63b0d8e6486ba')
 
+
+setTimeout(() => {
+  console.log('asjkdaskjdhaksjd')
+  a.play('https://p.scdn.co/mp3-preview/1ee9f1b0c3e3b327dd49ebc6dd64266b01adb96a')
+}, 5000);
+
+
+setTimeout(() => {
+  console.log('asjkdaskjdhaksjd')
+  a.pause()
+}, 7000);
 
 window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition  || null;
 
