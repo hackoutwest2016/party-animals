@@ -15,21 +15,18 @@ export class ContinuousParty {
             pitch: 2,
             rate: 0.85,
         };
-
-        this.recognizer = new Recognizer();
-        this.audioPlayer = new AudioPlayer();
     }
 
     start() {
-        say("Starting a new game", this.piximal);
+        API.speecher.say("Starting a new game", this.piximal);
         this.nextQuestion = 0;
         this.stopped = false;
         setTimeout(() => this._startNextQuestion(), 600);
     }
 
     stop() {
-        this.recognizer.stopListening();
-        this.audioPlayer.pause();
+        API.recognizer.stopListening();
+        API.audioPlayer.pause();
 
         this.stopped = true;
     }
@@ -49,42 +46,45 @@ export class ContinuousParty {
             this._startListeningForAnswers();
         } else {
             console.debug("No next question, assuming the game is over");
-            say("GAME OVER!", this.piximal);
+            API.speecher.say("GAME OVER!", this.piximal);
         }
     }
 
     _playSong(song) {
         console.debug("Playing", song);
-        this.audioPlayer.play(song, this._onSongFinished.bind(this));
+        API.audioPlayer.play(song, this._onSongFinished.bind(this));
     }
 
     _onSongFinished() {
         console.debug("SONG FINISHED WITHOUT CORRECT ANSWER");
-        this.recognizer.stopListening();
+        API.recognizer.stopListening();
 
-        say("You failed, the correct answer was " + this.currentQuestion.answer, this.piximal);
+        API.speecher.say("You failed, the correct answer was " + this.currentQuestion.answer, this.piximal);
         setTimeout(() => this._startNextQuestion(), 600);
     }
 
     _startListeningForAnswers() {
         console.debug("Starting to listen for anwser", this.currentQuestion.answer);
-        this.recognizer.startListening(this._checkAnswer.bind(this));
+        API.recognizer.startListening(this._checkAnswer.bind(this));
     }
 
     _checkAnswer(answer) {
         const correctAnswer = this.currentQuestion.answer;
+        const distance = stringDistance(correctAnswer, answer);
 
-        console.debug("Checking", correctAnswer, answer);
-        if (stringDistance(correctAnswer, answer) <= 5) {
+        console.debug("Checking", correctAnswer, answer, distance);
+        if (distance <= 5) {
             this._answeredCorrectly();
+        } else {
+            API.speecher.say("Nah, " + answer + " is not right, try again");
+            API.recognizer.startListening(this._checkAnswer.bind(this));
         }
     }
 
     _answeredCorrectly() {
-        this.recognizer.stopListening();
-        this.audioPlayer.pause();
+        API.audioPlayer.pause();
 
-        say("You answered correct! " + this.currentQuestion.correctAnswer, this.piximal);
+        API.speecher.say("You answered correct! " + this.currentQuestion.answer, this.piximal);
         setTimeout(() => this._startNextQuestion(), 600);
     }
 }

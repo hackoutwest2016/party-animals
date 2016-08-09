@@ -28,6 +28,7 @@ export default class Speecher {
   }
 
   say(whatToSay, onStartCB, onEndCB) {
+    console.debug("saying", whatToSay);
     let utterance = new SpeechSynthesisUtterance();
         utterance.text = whatToSay
         utterance.voice = this.selectedVoice
