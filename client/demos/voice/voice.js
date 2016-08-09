@@ -4,7 +4,8 @@ import { ReactiveVar } from 'meteor/reactive-var';
 import './voice.html';
 
 const CONFIG = {
-  lang:"en-US",
+  lang:"en_US",
+  lang2:"en-US",
   pitch: 2,
   rate: 0.85
 }
@@ -27,7 +28,7 @@ Template.voice.events({
           .getVoices()
           .filter(function(voice) {
             console.log(voice)
-             return voice.lang === CONFIG.lang;
+             return (voice.lang === CONFIG.lang || voice.lang === CONFIG.lang2);
           })
           .pop();
 
