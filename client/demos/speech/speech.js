@@ -2,10 +2,17 @@ import { Template } from 'meteor/templating';
 import { ReactiveVar } from 'meteor/reactive-var';
 
 import './speech.html';
+import { checkInput } from "../../questions/song-answer";
 
 window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition  || null;
 
 Template.speech.onCreated(function speechOnCreated() {
+  checkInput("peniss", {
+      lang:"en-US",
+      pitch: 2,
+      rate: 0.85
+  });
+
   this.status = new ReactiveVar('Stopped');
   this.transcription = new ReactiveVar('');
 
@@ -13,7 +20,9 @@ Template.speech.onCreated(function speechOnCreated() {
   this.recognizer.interimResults = true;
   this.recognizer.continuous = true;
   this.recognizer.onresult = (event) => {
-    this.transcription.set(event.results[0][0].transcript)
+    const whatWasSaid = event.results[0][0].transcript;
+    console.debug("Someone said", whatWasSaid); 
+    this.transcription.set(whatWasSaid);
   }
 });
 
