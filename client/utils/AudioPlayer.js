@@ -16,7 +16,10 @@ export default class AudioPlayer {
   }
 
   _decreaseVolume(newSong) {
-    this.audioTag.volume -= 0.05
+    const newVol = this.audioTag.volume - 0.05;
+    if (newVol >= 0) {
+        this.audioTag.volume = newVol;
+    }
     if (this.audioTag.volume >= 0.05) {
       this.decreaseTimeout = setTimeout(() => {
         this._decreaseVolume(newSong)

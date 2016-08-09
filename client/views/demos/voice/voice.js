@@ -1,7 +1,7 @@
 import { Template } from 'meteor/templating';
 import { ReactiveVar } from 'meteor/reactive-var';
-import { SongAnswerMode } from '../../../modes/song-answer';
-new SongAnswerMode([{artist: "hej", song: "https://p.scdn.co/mp3-preview/a2a9c13416fc981d035e75f16ec63b0d8e6486ba"}]).start();
+import { ContinuousParty } from '../../../modes/ContinuousParty';
+new ContinuousParty([{artist: "hej", song: "https://p.scdn.co/mp3-preview/a2a9c13416fc981d035e75f16ec63b0d8e6486ba"}]).start();
 
 import './voice.html';
 

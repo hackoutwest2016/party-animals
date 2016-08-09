@@ -1,4 +1,4 @@
-export function say(whatToSay, config, onEnd) {
+export function say(whatToSay, config) {
     console.debug("saying", whatToSay, "using", config);
 
     let selectedVoice = window.speechSynthesis
@@ -9,7 +9,6 @@ export function say(whatToSay, config, onEnd) {
           .pop();
 
     if (selectedVoice) {
-        console.log("GO", onEnd);
         let utterance = new SpeechSynthesisUtterance();
         utterance.text = whatToSay;
         utterance.voice = selectedVoice;
@@ -19,7 +18,7 @@ export function say(whatToSay, config, onEnd) {
 
         utterance.addEventListener('start', config.onStart);
 
-        utterance.addEventListener('end', onEnd);
+        utterance.addEventListener('end', config.onEnd);
 
         speechSynthesis.speak(utterance);
     } else {

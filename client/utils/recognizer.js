@@ -9,7 +9,7 @@ export class Recognizer {
 
         this.recognizer = new SpeechRecognition();
         this.recognizer.interimResults = false;
-        this.recognizer.continuous = false;
+        this.recognizer.continuous = true;
         this.recognizer.onresult = (event) => {
             const whatWasSaid = event.results[0][0].transcript;
             //console.debug("Someone said", whatWasSaid); 
