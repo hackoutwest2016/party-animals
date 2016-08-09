@@ -9,6 +9,8 @@ const CONFIG = {
   rate: 0.85
 }
 
+window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition  || null;
+
 Template.voice.onCreated(function voiceOnCreated() {
   this.status = new ReactiveVar('Stopped');
 });
