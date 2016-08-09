@@ -1,6 +1,6 @@
 import { Template } from 'meteor/templating';
 import { ReactiveVar } from 'meteor/reactive-var';
-import { say as soundSay } from "../utils/say";
+import { say as soundSay } from "../../utils/say";
 
 Template.subs.onCreated(function speechOnCreated() {
   this.subs = new ReactiveVar([]);
@@ -10,7 +10,7 @@ Template.subs.onCreated(function speechOnCreated() {
 Template.subs.helpers({
     currentSubs() {
         return Template.instance().subs.get();
-    }   
+    }
 });
 
 function startTranscript() {
