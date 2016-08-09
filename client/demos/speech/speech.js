@@ -5,6 +5,14 @@ import './speech.html';
 
 new SongAnswerMode().start();
 
+import AudioPlayer from "../../utils/AudioPlayer";
+
+
+// let a = new AudioPlayer();
+
+// a.play('https://p.scdn.co/mp3-preview/a2a9c13416fc981d035e75f16ec63b0d8e6486ba')
+
+
 window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition  || null;
 
 Template.speech.onCreated(function speechOnCreated() {
@@ -17,7 +25,7 @@ Template.speech.onCreated(function speechOnCreated() {
   this.recognizer.continuous = true;
   this.recognizer.onresult = (event) => {
     const whatWasSaid = event.results[0][0].transcript;
-    console.debug("Someone said", whatWasSaid); 
+    console.debug("Someone said", whatWasSaid);
     this.transcription.set(whatWasSaid);
     onUserInput(whatWasSaid);
   }
