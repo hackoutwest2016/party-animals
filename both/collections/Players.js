@@ -1,4 +1,4 @@
-Players = new Mongo.Collection("players");
+export const Players = new Mongo.Collection("Players");
 
 Players.attachSchema(new SimpleSchema({
   name: {

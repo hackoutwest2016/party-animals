@@ -1,4 +1,4 @@
-Questions = new Mongo.Collection("questions");
+export const Questions = new Mongo.Collection("Questions");
 
 Questions.attachSchema(new SimpleSchema({
   type: {

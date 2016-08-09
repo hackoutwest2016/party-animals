@@ -1,33 +1,21 @@
-Games = new Mongo.Collection("games");
+import { Meteor } from 'meteor/meteor'
+export const Games = new Mongo.Collection("Games");
 
 Games.attachSchema(new SimpleSchema({
   name: {
     type: String,
     label: "name"
   },
-  keywords: {
-    type: [String],
-    label: "keywords"
-  },
-  "keywords.$": {
+  type: {
     type: String,
-    label: "keyword"
+    allowedValues: ['all-vs-all', 'all-vs-animal'],
+    label: "name"
   },
-  description: {
-    type: String,
-    label: "description",
-  },
-  hash: {
-    type: String,
-    label: "description",
-  },
+
+  //Not explicity set by the user
   currentQuestion: {
     type: Meteor.Collection.ObjectID,
     label: "current question",
-  },
-  user: {
-    type: Meteor.Collection.ObjectID,
-    label: 'the user which we auth with'
   },
   animal: {
     type: Meteor.Collection.ObjectID,
@@ -42,3 +30,7 @@ Games.attachSchema(new SimpleSchema({
     label: 'the questions'
   }
 }));
+
+if(Meteor.isClient) {
+  window.Games = Games
+}

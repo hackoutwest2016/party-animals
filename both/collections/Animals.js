@@ -1,4 +1,4 @@
-Animals = new Mongo.Collection("animals");
+export const Animals = new Mongo.Collection("Animals");
 
 Animals.attachSchema(new SimpleSchema({
   voiceConfig: {
@@ -20,6 +20,10 @@ Animals.attachSchema(new SimpleSchema({
   name: {
     type: String,
     label: "name"
+  },
+  color: {
+    type: String,
+    label: 'color'
   },
   picture: {
     type: String,
