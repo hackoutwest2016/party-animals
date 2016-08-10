@@ -10,18 +10,14 @@ export class ContinuousParty {
                 song: q.song
             }
         });
-        this.piximal = piximal || {
-            lang:["en-US", "en_US"],
-            pitch: 2,
-            rate: 0.85,
-        };
+        this.piximal = piximal;
     }
 
     start() {
-        API.speecher.say("Starting a new game", this.piximal);
+        const later = () => setTimeout(() => this._startNextQuestion(), 600);
+        API.speecher.say("Starting a new game", this.piximal, later);
         this.nextQuestion = 0;
         this.stopped = false;
-        setTimeout(() => this._startNextQuestion(), 600);
     }
 
     stop() {
@@ -59,8 +55,8 @@ export class ContinuousParty {
         console.debug("SONG FINISHED WITHOUT CORRECT ANSWER");
         API.recognizer.stopListening();
 
-        API.speecher.say("You failed, the correct answer was " + this.currentQuestion.answer, this.piximal);
-        setTimeout(() => this._startNextQuestion(), 600);
+        const later = () => setTimeout(() => this._startNextQuestion(), 600);
+        API.speecher.say("You failed, the correct answer was " + this.currentQuestion.answer, this.piximal, later);
     }
 
     _startListeningForAnswers() {
@@ -84,7 +80,7 @@ export class ContinuousParty {
     _answeredCorrectly() {
         API.audioPlayer.pause();
 
-        API.speecher.say("You answered correct! " + this.currentQuestion.answer, this.piximal);
-        setTimeout(() => this._startNextQuestion(), 600);
-    }
+    const later = () => setTimeout(() => this._startNextQuestion(), 600);
+    API.speecher.say("You answered correct! " + this.currentQuestion.answer, this.piximal, later);
+}
 }

@@ -42,6 +42,7 @@ export default class Speecher {
     if(onEndCB)
       utterance.onend = onEndCB
 
+    console.log("apa", utterance.onend);
     speechSynthesis.speak(utterance);
   }
 }
