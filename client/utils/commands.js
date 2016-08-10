@@ -14,14 +14,16 @@ function penis(config) {
     say("Your best friend is a penis");
 }
 
-export function tryFindCommand(candidateKey) {
-    const unsortedDistances = calculateDistanceToEachCommand(commands, candidateKey);
+export function tryFindCommand(candidateKey, availableCommands) {
+    const corpus = availableCommands || commands;
+
+    const unsortedDistances = calculateDistanceToEachCommand(corpus, candidateKey);
     const sortedDistances = unsortedDistances.sort((a,b) => a.distance - b.distance);
     const mostLikelyCandidate = sortedDistances[0];
 
     //console.debug("Distances to", candidateKey, sortedDistances, mostLikelyCandidate);
     if (mostLikelyCandidate.distance <= 3) {
-        return commands[mostLikelyCandidate.command]
+        return corpus[mostLikelyCandidate.command]
     } else {
         return null;
     }
