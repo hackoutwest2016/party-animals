@@ -52,7 +52,12 @@ export class ContinuousParty {
                 this._playSong(this.currentQuestion.song);
                 this._startListeningForAnswers();
             }, 600);
-            API.speecher.say("start-guess-artist", this.piximal, later);
+
+            if (this.currentQuestion.question != "false") {
+                API.speecher.say(this.currentQuestion.question, this.piximal, later);
+            } else {
+                API.speecher.say("start-guess-artist", this.piximal, later);
+            }
         } else {
             console.debug("No next question, assuming the game is over");
             API.speecher.say("game-over", this.piximal);
