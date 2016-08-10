@@ -19,9 +19,11 @@ Router.route('/join', function () {
 });
 
 
-Router.route('/watch/:id', function () {
+Router.route('/watch/:_id', function () {
+  let game = Games.findOne({_id: this.params._id});
+  if(!game) return;
   this.layout('defaultLayout');
-  this.render('watch')
+  this.render('watchGame', {data: {game: game}});
 });
 
 Router.route('/game/:_id', function () {

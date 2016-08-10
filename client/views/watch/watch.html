@@ -1,7 +1,25 @@
-<template name="watch">
-  <section class="watch">
-    <h1>Hanna's B-day</h1>
-    <h1>Score:</h1>
+<template name="watchGame">
+  <section class="watchGame">
+    <h1 class="header turquoise">{{game.name}}'s game</h1>
+    <h1 class="purple">Score:</h1>
     <img src ="/images/starboard.png" height = "15">
+    <section class="players">
+      {{#each players}}
+        <h2>{{name}}: {{score}}</h2>
+      {{/each}}
+    </section>
+
+    {{#if modeIsAllVsAll}}
+      <p>
+        <h1 class="purple">NOW PLAYING</h1>
+        <p class="purple">All vs. All</p>
+      </p>
+    {{else}}
+      <p>
+        <h1 class="purple">NOW PLAYING</h1>
+        <p class="purple">{{partyAnimal.name}} vs. All</p>
+      </p>
+    {{/if}}
+
   </section>
 </template>
