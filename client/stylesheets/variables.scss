@@ -7,17 +7,17 @@ $font-family-sans-serif:          "andinaregular", "Roboto", sans-serif !default
 //Colors
 $red : red;
 $blue : blue;
-$turquoise: 1affd5;
-$lime: c4ff1a;
-$purple: ab87ff;
+$turquoise: #1affd5;
+$lime: #c4ff1a;
+$purple: #ab87ff;
 
 
 
 //buttons
 $button-bg: black;
-$button-color: white;
+$button-color: $turquoise;
 
 
 //Input
-$input-bg: black;
-$input-color: white;
+$input-bg: $lime;
+$input-color: black;

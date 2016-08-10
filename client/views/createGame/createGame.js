@@ -5,14 +5,18 @@ import { Session } from 'meteor/session'
 
 
 Template.createGame.onCreated(function createGamehOnCreated() {
-  Session.set({selectState: 1});
+  Session.set({
+    selectState: 1,
+    addedPlayers: []
+  });
 });
 
 function _createGame() {
    Meteor.call('games.create', {
     name: Session.get('selectedName'),
     type: Session.get('selectedType'),
-    animal: Session.get('selectedAnimal')
+    animal: Session.get('selectedAnimal'),
+    players: Session.get('addedPlayers')
   }, (err, res) => {
     if (err) {
       alert(err)
@@ -28,6 +32,9 @@ const helper = {
   animals: function () {
     return Animals.find();
   },
+  players: function() {
+    return Session.get('addedPlayers')
+  },
   state1: () => {
     return Session.get('selectState') === 1
   },
@@ -36,6 +43,9 @@ const helper = {
   },
   state3: () => {
     return Session.get('selectState') === 3
+  },
+  state4: () => {
+    return Session.get('selectState') === 4
   }
 }
 
@@ -43,6 +53,7 @@ Template.createGame.helpers(helper);
 Template.selectAnimal.helpers(helper)
 Template.selectName.helpers(helper)
 Template.selectType.helpers(helper)
+Template.addPlayers.helpers(helper)
 
 Template.selectAnimal.events({
   'click [data-select-animal]'(event, instance) {
@@ -58,7 +69,6 @@ Template.selectAnimal.events({
 Template.selectName.events({
   'input input'(event, instance) {
     let inputField = event.currentTarget;
-    console.log(inputField.value)
     $(instance
       .find('button'))
       .toggleClass('disabled', inputField.value.length === 0)
@@ -77,12 +87,46 @@ Template.selectName.events({
 
 Template.selectType.events({
   'click [data-select-all-vs-all]'(event, instance) {
-    Session.set({selectedType: 'all-vs-all'});
-    _createGame()
+    Session.set({
+      selectedType: 'all-vs-all',
+      selectState: 4
+    });
 
   },
   'click [data-select-animal-vs-all]'(event, instance) {
-    Session.set({selectedType: 'animal-vs-all'});
+    Session.set({
+      selectedType: 'animal-vs-all',
+    });
+    _createGame()
+  }
+});
+
+Template.addPlayers.events({
+  'input input'(event, instance) {
+    let inputField = event.currentTarget;
+
+    $(instance
+      .find('button'))
+      .toggleClass('disabled', inputField.value.length === 0)
+  },
+  'click [data-enter-name]'(event, instance) {
+    if ($(event.currentTarget).hasClass('disabled')) return;
+    else {
+      const name = instance.find('input').value
+      let players = Session.get('addedPlayers') || [];
+      players.push(name);
+
+      Session.set({
+        'addedPlayers': players
+      });
+
+      instance.find('input').value = ''
+      $(instance
+        .find('button'))
+        .addClass('disabled')
+    }
+  },
+  'click [data-done]'(event, instance) {
     _createGame()
   }
 });

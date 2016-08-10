@@ -9,12 +9,12 @@ function getQuestions(numberOfQuestions) {
 }
 
 Meteor.methods({
-  'games.create'({ name, type, animal }) {
+  'games.create'({ name, type, animal, players }) {
     let game = {
       name: name,
       type: type,
       animal: animal,
-      players: [],
+      players: players || [],
       questions: [],
       currentQuestion: 0
     }
@@ -24,7 +24,13 @@ Meteor.methods({
       return q._id;
     })
 
-    game.players.push(Players.insert({name: name}))
+    game.players.push(name);
+
+    let tempPlayers = game.players.map((name) => {
+      return Players.insert({name: name})
+    })
+
+    game.players = tempPlayers;
 
     Games.simpleSchema().clean(game, {
       extendAutoValueContext: {
