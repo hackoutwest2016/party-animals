@@ -84,6 +84,10 @@ Template.selectAnimal.onDestroyed(function selectAnimalOnDestroyed() {
 
 Template.selectName.onCreated(function selectNameOnCreated() {
   API.speecher.say('what is your name?')
+  API.recognizer.startListening(acceptVoiceCommand);
+});
+Template.selectName.onDestroyed(function selectNameOnDestroyed() {
+  API.recognizer.stopListening();
 });
 
 Template.selectName.events({
@@ -164,6 +168,13 @@ Template.addPlayers.events({
 
 function acceptVoiceCommand(a) {
     console.log("Got voice command", a);
+    if (helper.state2()) {
+        document.querySelector(".selectName > input").value = a;
+        document.querySelector(".selectName > button").className = "";
+        document.querySelector(".selectName > button").click();
+        return;
+    }
+
     const c = tryFindCommand(a.toLowerCase(), getCommands());
     if (c) {
         c();
@@ -189,5 +200,9 @@ function getCommands() {
                 document.querySelector("[data-name='Mipsy']").click();
             },
         };
+    } else if (helper.state2()) {
+        return {
+            
+        }
     }
 }
