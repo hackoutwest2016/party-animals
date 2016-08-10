@@ -23,8 +23,10 @@ function _createGame() {
       alert(err)
     } else {
       console.log('Game created. Id: ', res)
-      // Go to new route which creates the game and such
-      Router.go("/game/" + res);
+      API.speecher.say("Put the phone in the animal now. The game starts in ten - 9 - 8 - 7 - 6 - 5 - 4 - 3 - 2 - 1 - NOW",() => {
+          // Go to new route which creates the game and such
+          Router.go("/game/" + res);
+      });
     }
   });
 }

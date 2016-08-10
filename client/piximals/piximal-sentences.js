@@ -9,7 +9,7 @@
 // replace all instances of {var1} with value-of-var1 and so forth.
 export function getWhatToSay(what, piximal) {
     const piximalName = piximal ? piximal.Name : "fallback";
-    const piximalDictionary = apa[piximalName];
+    const piximalDictionary = apa[piximalName.toLowerCase()];
     if (piximalDictionary) {
         let whatToSay = findWhatToSay(piximalDictionary, what, piximal);
         whatToSay = replaceVariables(whatToSay, what);    
@@ -60,7 +60,31 @@ const apa = {
         "start-guess-artist": "Who sings this song?",
         "start-guess-country": "Where does the band that sings this song come from?",
     },
-    "purple": {
-
-    }
+    "flipsy": {
+        "new-game"          : "Neeew game! Are you ready, this is gonna be fuxxing awesome!" ,                                                                     
+        "answer-correct"    : "{answer} was correct! You are rad!",
+        "answer-wrong"      : "Sorry, {answer} is not it, epic fail!",
+        "question-failed"   : "Woops, you’re thinking too hard, or maybe not at all? Hihi, just kidding. {answer} was the correct answer!",                           
+        "game-over"         : "Oh noes, the game is already over! Thanks for playing, I looove you!",
+        "next-player"           : "So, {player} you’re up!",
+        "Start-guess-artist"    : "So, which artist is this?",
+    },
+    "tipsy": {
+        "new-game"          : "New game it is, me so happy!",                                                                     
+        "answer-correct"    : "Right-a-mundo friendo! {answer} it is! You so pro.",
+        "answer-wrong"      : "Whoopsie-doo, {answer} is wrong.",
+        "question-failed"   : "No more time for you! {answer} was the right answer answer. Oh, the shame",  
+        "game-over"         : "No more game left! Come back and play soon!",
+        "next-player"           : "Now it’s {player} turn!",
+        "Start-guess-artist"    : "Who’s the singer?",
+    },
+    "mipsy": {
+        "new-game"          : "We're starting a new game! Wii-iiii!",                                                                     
+        "answer-correct"    : "{answer} was correct! You are leet indeed",
+        "answer-wrong"      : "Nah, {answer} was not right",
+        "question-failed"   : "Time's up! {answer} was the correct answer. You fail",
+        "game-over"         : "Game finished, thank you for playing with me!",
+        "next-player"           : "Okay, time for {player}",
+        "Start-guess-artist"    : "Who sings this song?",
+    },
 }

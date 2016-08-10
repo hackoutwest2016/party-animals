@@ -19,6 +19,7 @@ export class PartyRound {
         });
         console.log("Questions", game.questions, serverSideQuestions, this.questions);
         this.piximal = Animals.findOne({_id: game.animal});
+        console.log("Piximal", this.piximal);
         this.players = serverSidePlayers.map(p => {
             return {
                 id: p._id,
@@ -57,11 +58,13 @@ export class PartyRound {
             this.currentQuestion = nextQuestion;
             Games.update(this.game._id, {"$set" : {"currentQuestion": this.currentQuestion.id}});
 
-            const later = () => setTimeout(() => {
-                this._playSong(this.currentQuestion.song);
-                this._startListeningForAnswers();
-            }, 600);
-            API.speecher.say("start-guess-artist", this.piximal, later);
+            API.speecher.say({key:"next-player", player:this.currentPlayer.name}, this.piximal, () => {
+                const later = () => setTimeout(() => {
+                    this._playSong(this.currentQuestion.song);
+                    this._startListeningForAnswers();
+                }, 600);
+                API.speecher.say("start-guess-artist", this.piximal, later);
+            });
         } else {
             console.debug("No next question, assuming the game is over");
             API.speecher.say("game-over", this.piximal);

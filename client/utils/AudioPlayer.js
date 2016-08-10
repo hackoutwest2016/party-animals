@@ -76,6 +76,7 @@ export default class AudioPlayer {
   }
 
   pause() {
+    this.audioTag.volume = 0;
     if(this.isPlaying) {
       this.isPlaying = false
       this._decreaseVolume()

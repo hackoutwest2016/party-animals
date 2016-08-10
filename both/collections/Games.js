@@ -32,7 +32,8 @@ Games.attachSchema(new SimpleSchema({
   },
   log: {
     type: [ String ],
-    label: 'What has been said'
+    label: 'What has been said',
+    optional: true
   }
 }));
 
