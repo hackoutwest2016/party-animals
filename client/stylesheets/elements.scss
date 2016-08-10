@@ -1,4 +1,32 @@
+@import 'variables';
+
 span, p, h1, h2, h3, h3 {
   text-align: center;
   font-weight: 200;
+}
+
+input {
+  background-color: $input-bg;
+  border: 0;
+  outline: none;
+  height: 50px;
+  width: 100%;
+  color: $input-color;
+  font-size: 20px;
+  padding: 0 10px;
+  font-family: $font;
+
+  &:placeholder {
+    font-family: $font;
+  }
+}
+
+button {
+  background-color: $button-bg;
+  width: 100%;
+  outline: none;
+  color: $button-color;
+  height: 50px;
+  font-size: 20px;
+  font-family: $font;
 }
