@@ -3,7 +3,7 @@ import { ReactiveVar } from 'meteor/reactive-var';
 import { Animals } from '/both/collections/Animals.js'
 import { Session } from 'meteor/session'
 import { API } from "/client/utils/API";
-
+import { tryFindCommand } from "/client/utils/commands";
 
 Template.createGame.onCreated(function createGameOnCreated() {
   Session.set({
@@ -59,6 +59,7 @@ Template.selectType.helpers(helper)
 Template.addPlayers.helpers(helper)
 Template.selectAnimal.onCreated(function selectAnimalOnCreated() {
   API.speecher.say('Which piximal do you want to play with? Tipsy, Flipsy or - Mipsy?')
+  API.recognizer.startListening(acceptVoiceCommand);
 });
 
 Template.selectAnimal.events({
@@ -73,6 +74,13 @@ Template.selectAnimal.events({
     });
   }
 });
+
+Template.selectAnimal.onDestroyed(function selectAnimalOnDestroyed() {
+    console.log("animal DESTROYED");
+    API.recognizer.stopListening();
+});
+
+
 
 Template.selectName.onCreated(function selectNameOnCreated() {
   API.speecher.say('what is your name?')
@@ -153,3 +161,33 @@ Template.addPlayers.events({
     _createGame()
   }
 });
+
+function acceptVoiceCommand(a) {
+    console.log("Got voice command", a);
+    const c = tryFindCommand(a.toLowerCase(), getCommands());
+    if (c) {
+        c();
+    } else {
+        console.log("Unrecognized voice command", a);
+        API.recognizer.startListening(acceptVoiceCommand);
+    }
+}
+
+function getCommands() {
+    if (helper.state1()) {
+        return {
+            "first": () => { 
+                console.log("tipsy");
+                document.querySelector("[data-name='Tipsy']").click();
+            },
+            "second": () => { 
+                console.log("flipsy");
+                document.querySelector("[data-name='Flipsy']").click();
+            },
+            "third": () => { 
+                console.log("MIPSY");
+                document.querySelector("[data-name='Mipsy']").click();
+            },
+        };
+    }
+}

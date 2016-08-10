@@ -3,8 +3,7 @@ import { ReactiveVar } from 'meteor/reactive-var';
 import { tryFindCommand } from "/client/utils/commands";
 
 Template.splash.onCreated(function splashOnCreated() {
-console.log(Template.splash);
-    API.recognizer.startListening(doShit);
+    API.recognizer.startListening(acceptVoiceCommand);
 });
 
 Template.splash.onDestroyed(function splashOnDestroyed() {
@@ -16,10 +15,10 @@ Template.splash.helpers({
 });
 
 
-function doShit(a) {
+function acceptVoiceCommand(a) {
     console.log("Got voice command", a);
     const commands = {
-        "new game": () => { 
+        "I want to play a new game": () => { 
             console.log("CREATE");
             Router.go("/create");
         },
@@ -29,6 +28,6 @@ function doShit(a) {
         c();
     } else {
         console.log("Unrecognized voice command", a);
-        API.recognizer.startListening(doShit);
+        API.recognizer.startListening(acceptVoiceCommand);
     }
 }
