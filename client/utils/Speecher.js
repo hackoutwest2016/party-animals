@@ -1,3 +1,5 @@
+import { getWhatToSay } from "../piximals/piximal-sentences" 
+
 export default class Speecher {
   constructor(voices = ["en-US", "en_US"], pitch = 2, rate = 0.8) {
     this.setConfig({
@@ -28,7 +30,9 @@ export default class Speecher {
   }
 
   say(whatToSay, onStartCB, onEndCB) {
+    whatToSay = getWhatToSay(whatToSay, this.piximalName) || whatToSay;
     console.debug("saying", whatToSay);
+
     let utterance = new SpeechSynthesisUtterance();
         utterance.text = whatToSay
         utterance.voice = this.selectedVoice

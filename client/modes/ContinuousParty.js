@@ -15,7 +15,7 @@ export class ContinuousParty {
 
     start() {
         const later = () => setTimeout(() => this._startNextQuestion(), 600);
-        API.speecher.say("Starting a new game", this.piximal, later);
+        API.speecher.say("new-game", this.piximal, later);
         this.nextQuestion = 0;
         this.stopped = false;
     }
@@ -42,7 +42,7 @@ export class ContinuousParty {
             this._startListeningForAnswers();
         } else {
             console.debug("No next question, assuming the game is over");
-            API.speecher.say("GAME OVER!", this.piximal);
+            API.speecher.say("game-over", this.piximal);
         }
     }
 
@@ -56,7 +56,7 @@ export class ContinuousParty {
         API.recognizer.stopListening();
 
         const later = () => setTimeout(() => this._startNextQuestion(), 600);
-        API.speecher.say("You failed, the correct answer was " + this.currentQuestion.answer, this.piximal, later);
+        API.speecher.say({key: "answer-wrong", answer: this.currentQuestion.answer}, this.piximal, later);
     }
 
     _startListeningForAnswers() {

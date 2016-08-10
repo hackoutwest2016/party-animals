@@ -21,7 +21,6 @@ export class Recognizer {
         };
 
         //Take a look at https://developer.mozilla.org/en-US/docs/Web/API/SpeechGrammar
-        //Or use some custom timeouts, 
         this.lastResult = {
             text: "",
             timestamp: null,
