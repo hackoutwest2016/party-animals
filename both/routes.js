@@ -27,7 +27,7 @@ Router.route('/watch/:id', function () {
 
 Router.route('/game/:_id', function () {
   let game = Games.findOne({_id: this.params._id});
-  console.log("In router", game);
+  if(!game) return;
   this.layout('defaultLayout');
   this.render('playGame', {data: {game: game}});
 });
