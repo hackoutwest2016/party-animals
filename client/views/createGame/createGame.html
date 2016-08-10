@@ -1,6 +1,47 @@
 <template name="createGame">
   <section class="createGame">
     <h1>createGame</h1>
-    {{> quickForm collection="Games" id="insertGameForm" type="insert"}}
+    <!-- {{> quickForm collection="Games" id="insertGameForm" type="insert"}} -->
+    {{state}}
+    {{#if state1}}
+      {{> selectAnimal}}
+    {{/if}}
+    {{#if state2}}
+      {{> selectName}}
+    {{/if}}
+    {{#if state3}}
+      {{> selectType}}
+    {{/if}}
   </section>
 </template>
+
+
+<template name="selectAnimal">
+  <section class="selectAnimal">
+    <h1>Which piximal do you want to play with?</h1>
+    {{#each animals}}
+      <div data-select-animal data-id={{_id}}>
+        <img src="{{picture}}" />
+        <p style="color:{{color}}">{{name}}</p>
+        </div>
+    {{/each}}
+  </section>
+</template>
+
+<template name="selectName">
+  <section class="selectName">
+    <h1>What is your name?</h1>
+    <input placeholder="Enter a name" />
+    <button data-enter-name>Submit</button>
+  </section>
+</template>
+
+<template name="selectType">
+  <section class="selectType">
+    <h1>What game do you want to play?</h1>
+    <h2 data-select-all-vs-all>All vs. All</h2>
+    <hr>
+    <h2 data-select-animal-vs-all>{{name}} vs. All</h2>
+  </section>
+</template>
+

@@ -8,18 +8,19 @@ Games.attachSchema(new SimpleSchema({
   },
   type: {
     type: String,
-    allowedValues: ['all-vs-all', 'all-vs-animal'],
+    allowedValues: ['all-vs-all', 'animal-vs-all'],
     label: "name"
+  },
+
+  animal: {
+    type: Meteor.Collection.ObjectID,
+    label: 'the animal'
   },
 
   //Not explicity set by the user
   currentQuestion: {
     type: Meteor.Collection.ObjectID,
     label: "current question",
-  },
-  animal: {
-    type: Meteor.Collection.ObjectID,
-    label: 'the animal'
   },
   players: {
     type: [ Meteor.Collection.ObjectID ],

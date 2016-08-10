@@ -7,7 +7,12 @@ Players.attachSchema(new SimpleSchema({
   },
   score: {
     type: Number,
-    label: "keywords"
+    label: "keywords",
+    autoValue: function() {
+      if (this.isInsert) {
+        return 0;
+      }
+    }
   }
 }));
 

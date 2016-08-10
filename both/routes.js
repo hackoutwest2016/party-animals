@@ -1,5 +1,6 @@
 Router.route('/', function () {
-  this.layout('homeLayout');
+  this.layout('defaultLayout');
+  this.render('splash')
 });
 
 Router.route('/subs', function () {
@@ -10,6 +11,11 @@ Router.route('/subs', function () {
 Router.route('/create', function () {
   this.layout('defaultLayout');
   this.render('createGame')
+});
+
+Router.route('/join', function () {
+  this.layout('defaultLayout');
+  this.render('joinGame')
 });
 
 

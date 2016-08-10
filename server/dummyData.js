@@ -8,9 +8,9 @@ const dummyData = {
       "voices":  ["en-US", "en_US"],
       "pitch": 2,
       "rate":  0.8,
-      "color":  "purple",
+      "color":  "lime",
       "name": "Limy",
-      "picture": "/images/monster-purple.gif",
+      "picture": "/images/monster-lime.gif",
       "score": 0
     }, {
       "_id": "2",

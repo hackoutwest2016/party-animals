@@ -30,3 +30,5 @@ aldeed:collection2
 iron:router
 aldeed:autoform
 meteorhacks:aggregate
+session
+check
