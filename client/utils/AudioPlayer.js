@@ -63,11 +63,11 @@ export default class AudioPlayer {
     if (!this.audioSrc && !newAudioSrc) return new Error('missing audio source :(..')
 
     if (this.isPlaying) {
-      if(this.increaseTimeout) cancelTimeout(this.increaseTimeout)
+      if(this.increaseTimeout) clearTimeout(this.increaseTimeout)
       this._decreaseVolume(newAudioSrc || this.audioSrc)
     }
     else {
-      if(this.decreaseTimeout) cancelTimeout(this.decreaseTimeout)
+      if(this.decreaseTimeout) clearTimeout(this.decreaseTimeout)
       this._doPlay(newAudioSrc || this.audioSrc);
       this._increaseVolume()
     }
