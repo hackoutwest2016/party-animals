@@ -1,16 +1,27 @@
 import { Recognizer } from "../utils/recognizer";
 import  AudioPlayer from "../utils/AudioPlayer";
 import { levenshteinDistance as stringDistance } from "../utils/string-distance";
+import { Games } from "../../both/collections/Games";
+import { Questions } from "../../both/collections/Questions";
+
+console.log(Games);
 
 export class ContinuousParty {
-    constructor(questions, piximal) {
-        this.questions = questions.map(q => {
+    constructor(game, piximal) {
+        const serverSideQuestions = Questions.find({_id: {"$in": game.questions}}).fetch();
+        console.log("GAME IN PARTY", game.questions, serverSideQuestions);
+        this.game = game;
+        this.questions = serverSideQuestions.map(q => {
             return {
-                answer: q.artist,
+                id: q._id,
+                answer: q.answer,
                 song: q.song
             }
         });
         this.piximal = piximal;
+
+
+
     }
 
     start() {
@@ -39,6 +50,8 @@ export class ContinuousParty {
             console.debug("Starting", nextQuestion);
 
             this.currentQuestion = nextQuestion;
+            Games.update(this.game._id, {"$set" : {"currentQuestion": this.currentQuestion.id}});
+
             this._playSong(this.currentQuestion.song);
             this._startListeningForAnswers();
         } else {
@@ -66,10 +79,11 @@ export class ContinuousParty {
     }
 
     _checkAnswer(answer) {
+        console.debug("Checking", correctAnswer, answer);
         const correctAnswer = this.currentQuestion.answer;
         const distance = stringDistance(correctAnswer, answer);
 
-        console.debug("Checking", correctAnswer, answer, distance);
+        console.debug("  Distance", distance);
         if (distance <= 5) {
             this._answeredCorrectly();
         } else {

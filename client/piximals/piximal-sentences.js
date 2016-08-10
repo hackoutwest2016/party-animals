@@ -8,17 +8,18 @@
 // in which case we'll use the key to look up the template string in the table below and
 // replace all instances of {var1} with value-of-var1 and so forth.
 export function getWhatToSay(what, piximal) {
-    const piximalDictionary = apa[piximal.Name];
+    const piximalName = piximal ? piximal.Name : "fallback";
+    const piximalDictionary = apa[piximalName];
     if (piximalDictionary) {
-        let whatToSay = findWhatToSay(what, piximal);
-        replaceVaribles(whatToSay, what);    
+        let whatToSay = findWhatToSay(piximalDictionary, what, piximal);
+        whatToSay = replaceVariables(whatToSay, what);    
         return whatToSay;
     } else {
         return getWhatToSay(what, "fallback");
     }
 }
 
-function findWhatToSay(what, piximal) {
+function findWhatToSay(piximalDictionary, what, piximal) {
     const whatId = typeof(what) === "string" ? what : what.key;
     let whatToSay = piximalDictionary[whatId] || apa["fallback"][whatId];
 
@@ -43,6 +44,8 @@ function replaceVariables(whatToSay, what) {
             }
         }
     }
+
+    return whatToSay;
 }
 
 

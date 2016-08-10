@@ -18,6 +18,8 @@ function _createGame() {
       alert(err)
     } else {
       console.log('sucess!!!')
+      // Go to new route which create the game and such
+      Router.go("game/" + res._id);
     }
   });
 }
