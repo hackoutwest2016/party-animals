@@ -1,23 +1,39 @@
 import { levenshteinDistance as stringDistance } from "../utils/string-distance";
 import { API } from "../utils/API";
+import { Games } from "../../both/collections/Games";
+import { Questions } from "../../both/collections/Questions";
+import { Players } from "../../both/collections/Players";
+import { Animals } from "../../both/collections/Animals";
 
 export class PartyRound {
-    constructor(questions, players, piximal) {
-        this.questions = questions.map(q => {
+    constructor(game, piximal) {
+        const serverSidePlayers = Players.find({_id: {"$in": game.players}}).fetch();
+        const serverSideQuestions = Questions.find({_id: {"$in": game.questions}}).fetch();
+        this.game = game;
+        this.questions = serverSideQuestions.map(q => {
             return {
-                answer: q.artist,
+                id: q._id,
+                answer: q.answer,
                 song: q.song
             }
         });
-        this.players = players;
-        this.piximal = piximal; 
+        console.log("Questions", game.questions, serverSideQuestions, this.questions);
+        this.piximal = Animals.findOne({_id: game.animal});
+        this.players = serverSidePlayers.map(p => {
+            return {
+                id: p._id,
+                name: p.name,
+            }
+        });
+        console.log("Players", this.players);
     }
 
     start() {
-        API.speecher.say("Starting a new game", this.piximal);
         this.nextQuestion = 0;
         this.stopped = false;
-        setTimeout(() => this._startNextQuestion(), 600);
+
+        const later = () => setTimeout(() => this._startNextQuestion(), 600);
+        API.speecher.say("new-game", this.piximal, later);
     }
 
     stop() {
@@ -36,21 +52,20 @@ export class PartyRound {
         this.nextQuestion++;
         if (nextQuestion) {
             this.currentPlayer = this._getNextPlayer();
-
             console.debug("Starting", nextQuestion, "for player", this.currentPlayer);
 
             this.currentQuestion = nextQuestion;
-            this._playSong(this.currentQuestion.song);
-            this._startListeningForAnswers();
+            Games.update(this.game._id, {"$set" : {"currentQuestion": this.currentQuestion.id}});
+
+            const later = () => setTimeout(() => {
+                this._playSong(this.currentQuestion.song);
+                this._startListeningForAnswers();
+            }, 600);
+            API.speecher.say("start-guess-artist", this.piximal, later);
         } else {
             console.debug("No next question, assuming the game is over");
-            API.speecher.say("GAME OVER!", this.piximal);
+            API.speecher.say("game-over", this.piximal);
         }
-    }
-
-    _getNextPlayer() {
-        const id = Math.floor(Math.random() * this.players.length);
-        return this.players[id];
     }
 
     _playSong(song) {
@@ -61,9 +76,12 @@ export class PartyRound {
     _onSongFinished() {
         console.debug("SONG FINISHED WITHOUT CORRECT ANSWER");
         API.recognizer.stopListening();
-        
-        API.speecher.say("You failed, the correct answer was " + this.currentQuestion.answer, this.piximal);
-        setTimeout(() => this._startNextQuestion(), 600);
+
+        const later = () => setTimeout(() => this._startNextQuestion(), 600);
+        API.speecher.say({key: "question-failed", answer: this.currentQuestion.answer}, this.piximal, later);
+
+        const newScore = Animals.findOne({_id: this.piximal._id}).score + 1;
+        Animals.update(this.piximal.id, {"$set": {"score": newScore}});
     }
 
     _startListeningForAnswers() {
@@ -73,18 +91,30 @@ export class PartyRound {
 
     _checkAnswer(answer) {
         const correctAnswer = this.currentQuestion.answer;
-
         console.debug("Checking", correctAnswer, answer);
-        if (stringDistance(correctAnswer, answer) <= 5) {
+        const distance = stringDistance(correctAnswer, answer);
+
+        console.debug("  Distance", distance);
+        if (distance <= 5) {
             this._answeredCorrectly();
+        } else {
+            API.speecher.say({ key: "answer-wrong", answer: answer });
+            API.recognizer.startListening(this._checkAnswer.bind(this));
         }
     }
 
     _answeredCorrectly() {
-        API.recognizer.stopListening();
         API.audioPlayer.pause();
 
-        API.speecher.say("You answered correct! " + this.currentQuestion.correctAnswer, this.piximal);
-        setTimeout(() => this._startNextQuestion(), 600);
+        const later = () => setTimeout(() => this._startNextQuestion(), 600);
+        API.speecher.say({ key: "answer-correct", answer: this.currentQuestion.answer }, this.piximal, later);
+
+        const newScore = Players.findOne({_id: this.currentPlayer.id}).score + 1;
+        Players.update(this.currentPlayer.id, {"$set": {"score": newScore}});
+    }
+
+    _getNextPlayer() {
+        const id = Math.floor(Math.random() * this.players.length);
+        return this.players[id];
     }
 }

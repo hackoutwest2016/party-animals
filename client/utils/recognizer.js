@@ -16,8 +16,10 @@ export class Recognizer {
         this.recognizer.onend = function() {
             console.debug("Recognition ended");
         };
-        this.recognizer.onerror = function(event) {
+        this.recognizer.onerror = (event) => {
             console.debug("Recognition error!", event);
+            this.stopListening();
+            this.startListening(onUserInput);
         };
 
         //Take a look at https://developer.mozilla.org/en-US/docs/Web/API/SpeechGrammar
@@ -27,6 +29,10 @@ export class Recognizer {
         };
         this.intervalId = setInterval(() => {
             if (this.lastResult.timestamp) {
+                if (this.lastResult.fired) {
+                    clearInterval(this.intervalId);
+                }
+
                 const currentMillis = new Date().getTime();
                 const millisSince = currentMillis - this.lastResult.timestamp;
                 if (millisSince >= 2000) {
@@ -65,6 +71,7 @@ export class Recognizer {
     }
 
     stopListening() {
+        this.lastResult.fired = "DO NOT FIRE";
         clearInterval(this.intervalId);
         if (this.recognizer) {
             console.debug("Stopping recognizer");

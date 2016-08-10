@@ -3,13 +3,11 @@ import  AudioPlayer from "../utils/AudioPlayer";
 import { levenshteinDistance as stringDistance } from "../utils/string-distance";
 import { Games } from "../../both/collections/Games";
 import { Questions } from "../../both/collections/Questions";
-
-console.log(Games);
+import { Animals } from "../../both/collections/Animals";
 
 export class ContinuousParty {
     constructor(game, piximal) {
         const serverSideQuestions = Questions.find({_id: {"$in": game.questions}}).fetch();
-        console.log("GAME IN PARTY", game.questions, serverSideQuestions);
         this.game = game;
         this.questions = serverSideQuestions.map(q => {
             return {
@@ -18,10 +16,8 @@ export class ContinuousParty {
                 song: q.song
             }
         });
-        this.piximal = piximal;
-
-
-
+        console.log("Questions", game.questions, serverSideQuestions, this.questions);
+        this.piximal = Animals.findOne({_id: game.animal});
     }
 
     start() {
@@ -52,8 +48,11 @@ export class ContinuousParty {
             this.currentQuestion = nextQuestion;
             Games.update(this.game._id, {"$set" : {"currentQuestion": this.currentQuestion.id}});
 
-            this._playSong(this.currentQuestion.song);
-            this._startListeningForAnswers();
+            const later = () => setTimeout(() => {
+                this._playSong(this.currentQuestion.song);
+                this._startListeningForAnswers();
+            }, 600);
+            API.speecher.say("start-guess-artist", this.piximal, later);
         } else {
             console.debug("No next question, assuming the game is over");
             API.speecher.say("game-over", this.piximal);
@@ -71,6 +70,10 @@ export class ContinuousParty {
 
         const later = () => setTimeout(() => this._startNextQuestion(), 600);
         API.speecher.say({key: "question-failed", answer: this.currentQuestion.answer}, this.piximal, later);
+
+        console.debug("Looking up the score for piximal", this.piximal);
+        const newScore = Animals.findOne({_id: this.piximal._id}).score + 1;
+        Animals.update(this.piximal.id, {"$set": {"score": newScore}});
     }
 
     _startListeningForAnswers() {
@@ -79,8 +82,8 @@ export class ContinuousParty {
     }
 
     _checkAnswer(answer) {
-        console.debug("Checking", correctAnswer, answer);
         const correctAnswer = this.currentQuestion.answer;
+        console.debug("Checking", correctAnswer, answer);
         const distance = stringDistance(correctAnswer, answer);
 
         console.debug("  Distance", distance);

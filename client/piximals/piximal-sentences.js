@@ -57,6 +57,8 @@ const apa = {
         "question-failed": "Time's up! {answer} was the correct answer. You fail",
         "game-over": "Game over!",
         "next-player": "Okay, time for {player}",
+        "start-guess-artist": "Who sings this song?",
+        "start-guess-country": "Where does the band that sings this song come from?",
     },
     "purple": {
 

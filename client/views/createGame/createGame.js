@@ -17,9 +17,9 @@ function _createGame() {
     if (err) {
       alert(err)
     } else {
-      console.log('sucess!!!')
-      // Go to new route which create the game and such
-      Router.go("game/" + res._id);
+      console.log('Game created. Id: ', res)
+      // Go to new route which creates the game and such
+      Router.go("/game/" + res);
     }
   });
 }

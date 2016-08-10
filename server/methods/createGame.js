@@ -36,6 +36,6 @@ Meteor.methods({
     });
 
     check(game, Games.simpleSchema());
-    Games.insert(game);
+    return Games.insert(game);
   }
 });
