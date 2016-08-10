@@ -13,21 +13,21 @@ Games.attachSchema(new SimpleSchema({
   },
 
   animal: {
-    type: Meteor.Collection.ObjectID,
+    type: String,
     label: 'the animal'
   },
 
   //Not explicity set by the user
   currentQuestion: {
-    type: Meteor.Collection.ObjectID,
+    type: String,
     label: "current question",
   },
   players: {
-    type: [ Meteor.Collection.ObjectID ],
+    type: [ String ],
     label: 'the players'
   },
   questions: {
-    type: [ Meteor.Collection.ObjectID ],
+    type: [ String ],
     label: 'the questions'
   }
 }));

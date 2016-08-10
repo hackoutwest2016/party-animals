@@ -18,6 +18,7 @@ Meteor.methods({
       questions: [],
       currentQuestion: 0
     }
+    console.log(game);
 
     game.questions = getQuestions(10).map((q) => {
       return q._id;

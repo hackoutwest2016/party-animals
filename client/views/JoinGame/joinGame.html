@@ -1,5 +1,12 @@
 <template name="joinGame">
   <section class="joinGame">
     <h1>join Game</h1>
+    {{#each games}}
+      <img src="{{ partyAnimal.picture }}" />
+      <h2>{{name}}'s {{type}} game!</h2>
+      <p>( {{playerString}} )</p>
+
+      <a href="/join/{{_id}}">join</a> / <a href="/watch/{{_id}}">watch</a>
+    {{/each}}
   </section>
 </template>

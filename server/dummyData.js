@@ -1,5 +1,6 @@
 import { Animals } from '../both/collections/Animals.js'
 import { Questions } from '../both/collections/Questions.js'
+import { Games } from '../both/collections/Games.js'
 
 const dummyData = {
   "animals": [
@@ -88,6 +89,20 @@ const dummyData = {
 }
 
 Meteor.startup(() => {
+  if (Games.find().count() === 0) {
+    Meteor.call('games.create', {
+      name: 'Thinner',
+      type: 'animal-vs-all',
+      animal: '1'
+      }, (err, res) => {
+    })
+    Meteor.call('games.create', {
+      name: 'Malin',
+      type: 'all-vs-all',
+      animal: '2'
+      }, (err, res) => {
+    })
+  }
   if (Animals.find().count() === 0) {
     dummyData.animals.forEach(function (doc) {
       Animals.insert(doc);
