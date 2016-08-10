@@ -35,13 +35,6 @@ export default class Speecher {
   say(whatToSay, onStartCB, onEndCB) {
     whatToSay = getWhatToSay(whatToSay, this.piximalName) || whatToSay;
 
-    Logs.insert({log: whatToSay});
-
-    if (Session.get("currentGame")) {
-        const log = Games.findOne({_id: Session.get("currentGame")}).log || [];
-        log.push(whatToSay);
-        Games.update(Session.get("currentGame"), {"$set": {log: log}});
-    }
     console.debug("saying", whatToSay);
 
     let utterance = new SpeechSynthesisUtterance();
@@ -51,8 +44,17 @@ export default class Speecher {
         utterance.rate = this.rate
         utterance.pitch = this.pitch
 
-    if(onStartCB)
-      utterance.onstart = onStartCB
+        utterance.onstart = () => {
+            Logs.insert({log: whatToSay});
+
+            if (Session.get("currentGame")) {
+                const log = Games.findOne({_id: Session.get("currentGame")}).log || [];
+                log.push(whatToSay);
+                Games.update(Session.get("currentGame"), {"$set": {log: log}});
+            }
+            if(onStartCB)
+              utterance.onstart = onStartCB
+        };
 
     if(onEndCB)
       utterance.onend = onEndCB
