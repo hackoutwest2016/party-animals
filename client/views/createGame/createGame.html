@@ -23,7 +23,7 @@
     <h1 class="purple" data-say>Which piximal do you want to play with?</h1>
     <br>
     {{#each animals}}
-      <div data-select-animal data-id={{_id}}>
+      <div data-select-animal data-id={{_id}} data-name={{name}}>
         <img src="{{picture}}" />
         <p style="color:{{color}}">{{name}}</p>
         </div>
@@ -46,7 +46,7 @@
     <br>
     <button data-select-all-vs-all>All vs. All</button>
     <p>or</p>
-    <button data-select-animal-vs-all > {{name}} vs. All</button>
+    <button data-select-animal-vs-all > Me vs. All</button>
   </section>
 </template>
 

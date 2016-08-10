@@ -4,7 +4,8 @@ Router.route('/', function () {
 });
 
 Router.route('/subs', function () {
-  this.layout('subLayout');
+  this.layout('defaultLayout');
+  this.render('subs')
 });
 
 

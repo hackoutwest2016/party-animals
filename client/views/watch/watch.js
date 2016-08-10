@@ -18,5 +18,10 @@ Template.watchGame.helpers({
   },
   modeIsAllVsAll: function() {
     return (this.game.type === 'all-vs-all')
+  },
+  currentSubs: function() {
+    return Logs.find({'createdAt': {
+        $gt: new Date(new Date().getTime() - 6000)
+      }}, {sort: {createdAt: -1}, limit: 1});
   }
 });

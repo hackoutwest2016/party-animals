@@ -1,6 +1,12 @@
 <template name="watchGame">
   <section class="watchGame">
     <h1 class="header turquoise">{{game.name}}'s game</h1>
+
+    {{#each currentSubs}}
+      <p class="lime">{{log}}</p>
+    {{/each}}
+
+
     <h1 class="purple">Score:</h1>
     <img src ="/images/starboard.png" height = "15">
     <section class="players">
@@ -20,6 +26,5 @@
         <p class="purple">{{partyAnimal.name}} vs. All</p>
       </p>
     {{/if}}
-
   </section>
 </template>

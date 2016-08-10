@@ -1,10 +1,11 @@
 <template name="subs">
   <section class="subs">
-    <h1>party-animals</h1>
-    <img src="/images/monster-turquoise.gif" />
-    {{#each sub in subs}}
-        <div>{{sub}}</div>
-    {{/each}}
-    <div id="subs-space"></div>
+    <h1 class="header turquoise">subs</h1>
+    <img src ="/images/starboard.png" height = "15">
+    <section class="subs">
+      {{#each currentSubs}}
+        <p>{{log}}</p>
+      {{/each}}
+    </section>
   </section>
 </template>

@@ -65,13 +65,14 @@ Template.selectAnimal.events({
   'click [data-select-animal]'(event, instance) {
     const id = event.currentTarget.getAttribute('data-id');
 
+    API.speecher.say(name + ' rocks!')
+
     Session.set({
       selectedAnimal: id,
       selectState: 2
     });
   }
 });
-
 
 Template.selectName.onCreated(function selectNameOnCreated() {
   API.speecher.say('what is your name?')
@@ -88,6 +89,7 @@ Template.selectName.events({
     if ($(event.currentTarget).hasClass('disabled')) return;
     else {
       const name = instance.find('input').value
+      API.speecher.say('hi '+ name);
       Session.set({
         selectedName: name,
         selectState: 3
@@ -116,7 +118,6 @@ Template.selectType.events({
   }
 });
 
-
 Template.addPlayers.onCreated(function addPlayersOnCreated() {
   API.speecher.say('Add Players!')
 });
@@ -135,6 +136,7 @@ Template.addPlayers.events({
     else {
       const name = instance.find('input').value
       let players = Session.get('addedPlayers') || [];
+      API.speecher.say(name);
       players.push(name);
 
       Session.set({
