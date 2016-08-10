@@ -9,6 +9,7 @@ import { Games } from "../../../both/collections/Games";
 Template.playGame.onCreated(function playGameOnCreated() {
     console.log("in playGame", this.data);
 
+    Session.set("currentGame", this.data.game._id);
     let apa;
     if (this.data.game.type === "animal-vs-all") {
         apa = new ContinuousParty(this.data.game);

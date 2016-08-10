@@ -1,4 +1,6 @@
-import { getWhatToSay } from "../piximals/piximal-sentences" 
+import { getWhatToSay } from "../piximals/piximal-sentences" ;
+import { Session } from "meteor/session";
+import { Games } from "../../both/collections/Games";
 
 export default class Speecher {
   constructor(voices = ["en-US", "en_US"], pitch = 2, rate = 0.8) {
@@ -31,6 +33,12 @@ export default class Speecher {
 
   say(whatToSay, onStartCB, onEndCB) {
     whatToSay = getWhatToSay(whatToSay, this.piximalName) || whatToSay;
+
+    if (Session.get("currentGame")) {
+        const log = Games.findOne({_id: Session.get("currentGame")}).log || [];
+        log.push(whatToSay);
+        Games.update(Session.get("currentGame"), {"$set": {log: log}});
+    }
     console.debug("saying", whatToSay);
 
     let utterance = new SpeechSynthesisUtterance();

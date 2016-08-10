@@ -29,6 +29,10 @@ Games.attachSchema(new SimpleSchema({
   questions: {
     type: [ String ],
     label: 'the questions'
+  },
+  log: {
+    type: [ String ],
+    label: 'What has been said'
   }
 }));
 
