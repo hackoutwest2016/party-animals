@@ -10,11 +10,7 @@ export class PartyRound {
             }
         });
         this.players = players;
-        this.piximal = piximal || {
-            lang:["en-US", "en_US"],
-            pitch: 2,
-            rate: 0.85,
-        };
+        this.piximal = piximal; 
     }
 
     start() {

@@ -7,25 +7,41 @@
 // }
 // in which case we'll use the key to look up the template string in the table below and
 // replace all instances of {var1} with value-of-var1 and so forth.
-export function getWhatToSay(what, piximalName) {
-    const piximalDictionary = apa[piximalName];
+export function getWhatToSay(what, piximal) {
+    const piximalDictionary = apa[piximal.Name];
     if (piximalDictionary) {
-        const whatId = typeof(what) === "string" ? what : what.key;
-        let whatToSay = piximalDictionary[whatId] || apa["fallback"][whatId];
-
-        if (typeof(what) !== "string") {
-            // We're trying to say something more complex than a constant sentence
-            // replace all {VARIABLE} with the value given in the what object
-            for (let k of Object.keys(what)) {
-                if (k !== "key") {
-                    whatToSay = whatToSay.replace("{" + k + "}", what[k]);
-                }
-            }
-        }
-        
+        let whatToSay = findWhatToSay(what, piximal);
+        replaceVaribles(whatToSay, what);    
         return whatToSay;
     } else {
         return getWhatToSay(what, "fallback");
+    }
+}
+
+function findWhatToSay(what, piximal) {
+    const whatId = typeof(what) === "string" ? what : what.key;
+    let whatToSay = piximalDictionary[whatId] || apa["fallback"][whatId];
+
+    if (Array.isArray(whatToSay)) {
+        const randomId = Math.floor(Math.random() * whatToSay.length);
+        return whatToSay[randomId];
+    } else if (typeof(whatToSay) === "object") {
+        const moodBased = whatToSay[piximal.mood];
+        return moodBased || whatToSay[Object.keys(whatToSay)[0]];
+    } else {
+        return whatToSay;
+    }
+}
+
+function replaceVariables(whatToSay, what) {
+    if (typeof(what) !== "string") {
+        // We're trying to say something more complex than a constant sentence
+        // replace all {VARIABLE} with the value given in the what object
+        for (let k of Object.keys(what)) {
+            if (k !== "key") {
+                whatToSay = whatToSay.replace("{" + k + "}", what[k]);
+            }
+        }
     }
 }
 
@@ -34,7 +50,8 @@ const apa = {
     "fallback": {
         "new-game": "We're starting a new game! Wii-ii-iii-iii",
         "answer-correct": "{answer} was correct! You are leet indeed",
-        "answer-wrong": "Aaw, {answer} was not correct. You fail",
+        "answer-wrong": "Nah, {answer} was not right",
+        "question-failed": "Time's up! {answer} was the correct answer. You fail",
         "game-over": "Game over!",
         "next-player": "Okay, time for {player}",
     },

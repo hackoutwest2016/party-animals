@@ -14,10 +14,11 @@ export class ContinuousParty {
     }
 
     start() {
-        const later = () => setTimeout(() => this._startNextQuestion(), 600);
-        API.speecher.say("new-game", this.piximal, later);
         this.nextQuestion = 0;
         this.stopped = false;
+
+        const later = () => setTimeout(() => this._startNextQuestion(), 600);
+        API.speecher.say("new-game", this.piximal, later);
     }
 
     stop() {
@@ -56,7 +57,7 @@ export class ContinuousParty {
         API.recognizer.stopListening();
 
         const later = () => setTimeout(() => this._startNextQuestion(), 600);
-        API.speecher.say({key: "answer-wrong", answer: this.currentQuestion.answer}, this.piximal, later);
+        API.speecher.say({key: "question-failed", answer: this.currentQuestion.answer}, this.piximal, later);
     }
 
     _startListeningForAnswers() {
@@ -72,7 +73,7 @@ export class ContinuousParty {
         if (distance <= 5) {
             this._answeredCorrectly();
         } else {
-            API.speecher.say("Nah, " + answer + " is not right, try again");
+            API.speecher.say({ key: "answer-wrong", answer: answer });
             API.recognizer.startListening(this._checkAnswer.bind(this));
         }
     }
@@ -80,7 +81,7 @@ export class ContinuousParty {
     _answeredCorrectly() {
         API.audioPlayer.pause();
 
-    const later = () => setTimeout(() => this._startNextQuestion(), 600);
-    API.speecher.say("You answered correct! " + this.currentQuestion.answer, this.piximal, later);
-}
+        const later = () => setTimeout(() => this._startNextQuestion(), 600);
+        API.speecher.say({ key: "answer-correct", answer: this.currentQuestion.answer }, this.piximal, later);
+    }
 }
