@@ -2,9 +2,10 @@ import { Template } from 'meteor/templating';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Animals } from '/both/collections/Animals.js'
 import { Session } from 'meteor/session'
+import { API } from "/client/utils/API";
 
 
-Template.createGame.onCreated(function createGamehOnCreated() {
+Template.createGame.onCreated(function createGameOnCreated() {
   Session.set({
     selectState: 1,
     addedPlayers: []
@@ -54,6 +55,9 @@ Template.selectAnimal.helpers(helper)
 Template.selectName.helpers(helper)
 Template.selectType.helpers(helper)
 Template.addPlayers.helpers(helper)
+Template.selectAnimal.onCreated(function selectAnimalOnCreated() {
+  API.speecher.say('Which piximal do you want to play with? Tipsy, Flipsy or - Mipsy?')
+});
 
 Template.selectAnimal.events({
   'click [data-select-animal]'(event, instance) {
@@ -64,6 +68,11 @@ Template.selectAnimal.events({
       selectState: 2
     });
   }
+});
+
+
+Template.selectName.onCreated(function selectNameOnCreated() {
+  API.speecher.say('what is your name?')
 });
 
 Template.selectName.events({
@@ -85,6 +94,10 @@ Template.selectName.events({
   }
 });
 
+Template.selectType.onCreated(function selectTypeOnCreated() {
+  API.speecher.say('what game do you want to play??')
+});
+
 Template.selectType.events({
   'click [data-select-all-vs-all]'(event, instance) {
     Session.set({
@@ -100,6 +113,12 @@ Template.selectType.events({
     _createGame()
   }
 });
+
+
+Template.addPlayers.onCreated(function addPlayersOnCreated() {
+  API.speecher.say('Add Players!')
+});
+
 
 Template.addPlayers.events({
   'input input'(event, instance) {

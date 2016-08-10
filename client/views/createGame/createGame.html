@@ -21,7 +21,7 @@
 
 <template name="selectAnimal">
   <section class="selectAnimal">
-    <h1 class="purple">Which piximal do you want to play with?</h1>
+    <h1 class="purple" data-say>Which piximal do you want to play with?</h1>
     {{#each animals}}
       <div data-select-animal data-id={{_id}}>
         <img src="{{picture}}" />

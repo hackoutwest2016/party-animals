@@ -2,6 +2,7 @@ import { Animals } from '../both/collections/Animals.js'
 import { Questions } from '../both/collections/Questions.js'
 import { Games } from '../both/collections/Games.js'
 
+
 const dummyData = {
   "animals": [
     {
@@ -9,8 +10,8 @@ const dummyData = {
       "voices":  ["en-US", "en_US"],
       "pitch": 2,
       "rate":  0.8,
-      "color":  "lime",
-      "name": "Limy",
+      "color":  "#c4ff1a",
+      "name": "tipsy",
       "picture": "/images/monster-lime.gif",
       "score": 0
     }, {
@@ -18,8 +19,8 @@ const dummyData = {
       "voices":  ["en-US", "en_US"],
       "pitch": 0.6,
       "rate":  0.5,
-      "color":  "purple",
-      "name": "Purply",
+      "color":  "#ab87ff",
+      "name": "flipsy",
       "picture": "/images/monster-purple.gif",
       "score": 0
     }, {
@@ -27,8 +28,8 @@ const dummyData = {
       "voices":  ["en-US", "en_US"],
       "pitch": 0.8,
       "rate":  1,
-      "color":  "turquoise",
-      "name": "Turquoisy",
+      "color":  "#1affd5",
+      "name": "mipsy",
       "picture": "/images/monster-turquoise.gif",
       "score": 0
     }
