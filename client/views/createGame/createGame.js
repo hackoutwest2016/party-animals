@@ -13,6 +13,7 @@ Template.createGame.onCreated(function createGameOnCreated() {
 });
 
 function _createGame() {
+   Session.set("selectState", 5);
    Meteor.call('games.create', {
     name: Session.get('selectedName'),
     type: Session.get('selectedType'),
@@ -49,6 +50,9 @@ const helper = {
   },
   state4: () => {
     return Session.get('selectState') === 4
+  },
+  state5: () => {
+    return Session.get('selectState') === 5
   }
 }
 
