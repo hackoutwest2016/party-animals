@@ -34,8 +34,12 @@ const dummyData = {
       "score": 0
     }
   ],
-  "questions": [
-    {
+  "questions": [{
+      "_id": "0",
+      "question": "Wes Anderson is a very famous director with a good music taste. In which movie was this song featured?",
+      "song":  "https://p.scdn.co/mp3-preview/f114bce3d424f2fbaba0fe5688ddb3d0dac786db",
+      answer:"Darjeeling Limited"
+    }, {
       "_id": "1",
       "question": false,
       "song": "https://p.scdn.co/mp3-preview/fd42a3f91b43b94509225aec705b4a24a5bd917b",
@@ -52,7 +56,7 @@ const dummyData = {
       answer:"The Smiths",
     }, {
       "_id": "4",
-      "question": "Aww, this artist is awesome and his name is Chuck Berry. When was he born, 1926 or 1916? ",
+      "question": "Aww, this artist is awesome and his name is Chuck Berry. When was he born, 1926 or 1916?",
       "song": "https://p.scdn.co/mp3-preview/4857fd042d57565ff27226fce70bb3acb0c5d84a",
       answer:"1926"
     }, {
@@ -62,26 +66,21 @@ const dummyData = {
       answer:"some kind of monster"
     }, {
       "_id": "6",
-      "question": "Wes Anderson is a very famous director and movie maker, but which movie was this song featured in",
-      "song":  "https://p.scdn.co/mp3-preview/f114bce3d424f2fbaba0fe5688ddb3d0dac786db",
-      answer:"Darjeeling Limited"
-    }, {
-      "_id": "7",
-      "question": "Elliot Smith was loved by all indie lovers out there, but sadly he died in the beginning of 2000. But how did he die?",
+      "question": "Elliot Smith was loved by all indie lovers out there, but sadly he died in the beginning of 2000. how did he die?",
       "song":  "https://p.scdn.co/mp3-preview/e30aa86eb95412bb2174a6946c66f73da2e7f8c8",
       answer:"suicide"
     }, {
-      "_id": "8",
+      "_id": "7",
       "question": false,
       "song":  "https://p.scdn.co/mp3-preview/07dbfe8eb7729d99a182b26fa1ec2f3467ba86f5",
       answer: "abba"
     }, {
-      "_id": "9",
+      "_id": "8",
       "question": false,
       "song":  "https://p.scdn.co/mp3-preview/edbc82bbf8bd386446800a63d57270d600b65550",
       answer: "The Beatles"
     }, {
-      "_id": "10",
+      "_id": "9",
       "question": false,
       "song":  "https://p.scdn.co/mp3-preview/fcb26a22c07a18d2e9619bee546b4849b9ad5fcb",
       answer: "Nirvana"

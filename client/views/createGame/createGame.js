@@ -199,12 +199,16 @@ function acceptVoiceCommand(a) {
     if (helper.state4()) {
         if(a === 'done') {
           document.querySelector("[data-done]").click();
+          return;
         }
-        document.querySelector(".addPlayers > input").value = a;
-        document.querySelector("[data-enter-name]").className = "";
-        document.querySelector("[data-done]").className = "";
-        document.querySelector("[data-enter-name]").click();
-        return;
+        else {
+          document.querySelector(".addPlayers > input").value = a;
+          document.querySelector("[data-enter-name]").className = "";
+          document.querySelector("[data-done]").className = "";
+          document.querySelector("[data-enter-name]").click();
+          return;
+        }
+
     }
 
     const c = tryFindCommand(a.toLowerCase(), getCommands());

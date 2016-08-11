@@ -36,7 +36,7 @@ export class Recognizer {
 
                 const currentMillis = new Date().getTime();
                 const millisSince = currentMillis - this.lastResult.timestamp;
-                if (millisSince >= 5000) {
+                if (millisSince >= 3000) {
                     this.lastResult.fired = true;
                     this.stopListening();
                     console.debug("This is taking too loooooong, firing event even though the API isn't sure what is said");

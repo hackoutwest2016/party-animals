@@ -3,6 +3,7 @@ export default class AudioPlayer {
     this.isPlaying = false
     this.audioSrc = ''
     this.audioTag = new Audio()
+    this.audioTag.volume = 0
     this.currentTime = 0
     this.decreaseTimeout = this.increaseTimeout = false;
 
@@ -20,6 +21,7 @@ export default class AudioPlayer {
     if (newVol >= 0) {
       this.audioTag.volume = newVol;
     }
+
     if (this.audioTag.volume >= 0.05) {
       this.decreaseTimeout = setTimeout(() => {
         this._decreaseVolume(newSong)
@@ -27,8 +29,11 @@ export default class AudioPlayer {
     }
 
     else if (newSong) {
+      this.audioTag.pause();
       this._doPlay(newSong)
-      this._increaseVolume()
+    }
+    else {
+      this.audioTag.pause();
     }
   }
 
@@ -37,7 +42,7 @@ export default class AudioPlayer {
     if (newVol <= 1) {
       this.audioTag.volume = newVol;
     }
-    if (this.audioTag.volume <= 0.65) {
+    if (this.audioTag.volume <= 0.25) {
       this.increaseTimeout = setTimeout(() => {
         this._increaseVolume(cb)
       }, 50);
@@ -51,12 +56,15 @@ export default class AudioPlayer {
     this.audioTag.src = newAudioSrc || this.audioSrc;
     this.isPlaying = true
     this.audioTag.play();
+    setTimeout(() => {
+      this._increaseVolume()
+    }, 500)
   }
 
   _doPause() {
     this.isPlaying = false
     this.audioTag.onended = null;
-    this.audioTag.pause();
+    _decreaseVolume()
   }
 
   play(newAudioSrc, cb) {
@@ -69,14 +77,12 @@ export default class AudioPlayer {
     else {
       if(this.decreaseTimeout) clearTimeout(this.decreaseTimeout)
       this._doPlay(newAudioSrc || this.audioSrc);
-      this._increaseVolume()
     }
 
     this.audioTag.onended = cb;
   }
 
   pause() {
-    this.audioTag.volume = 0;
     if(this.isPlaying) {
       this.isPlaying = false
       this._decreaseVolume()
