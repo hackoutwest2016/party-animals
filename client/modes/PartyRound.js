@@ -14,7 +14,8 @@ export class PartyRound {
             return {
                 id: q._id,
                 answer: q.answer,
-                song: q.song
+                song: q.song,
+                question: q.question,
             }
         });
         console.log("Questions", game.questions, serverSideQuestions, this.questions);
