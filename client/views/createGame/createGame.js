@@ -23,7 +23,7 @@ function _createGame() {
       alert(err)
     } else {
       console.log('Game created. Id: ', res)
-      API.speecher.say("Put the phone in the animal now. The game starts in ten - 9 - 8 - 7 - 6 - 5 - 4 - 3 - 2 - 1 - NOW",() => {
+      API.speecher.say("Put the phone in the animal now. The game starts in ten - 9 - 8 - 7 - 6 - 5 - 4 - 3 - 2 - 1 - NOW",false, () => {
           // Go to new route which creates the game and such
           Router.go("/game/" + res);
       });
@@ -58,15 +58,17 @@ Template.selectName.helpers(helper)
 Template.selectType.helpers(helper)
 Template.addPlayers.helpers(helper)
 Template.selectAnimal.onCreated(function selectAnimalOnCreated() {
-  API.speecher.say('Which piximal do you want to play with? Tipsy, Flipsy or - Mipsy?')
-  API.recognizer.startListening(acceptVoiceCommand);
+  API.speecher.say('Which piximal do you want to play with? Tipsy, Flipsy or - Mipsy?', false, () => {
+    API.recognizer.startListening(acceptVoiceCommand);
+  })
 });
 
 Template.selectAnimal.events({
   'click [data-select-animal]'(event, instance) {
     const id = event.currentTarget.getAttribute('data-id');
+    const name = event.currentTarget.getAttribute('data-name');
 
-    API.speecher.say(name + ' rocks!')
+    API.speecher.say('yeaaay! - ' + name + ' rocks!')
 
     Session.set({
       selectedAnimal: id,
@@ -83,8 +85,10 @@ Template.selectAnimal.onDestroyed(function selectAnimalOnDestroyed() {
 
 
 Template.selectName.onCreated(function selectNameOnCreated() {
-  API.speecher.say('what is your name?')
-  API.recognizer.startListening(acceptVoiceCommand);
+  API.speecher.say('what is your name?', false , () => {
+    API.recognizer.startListening(acceptVoiceCommand);
+  })
+
 });
 Template.selectName.onDestroyed(function selectNameOnDestroyed() {
   API.recognizer.stopListening();
@@ -110,12 +114,22 @@ Template.selectName.events({
   }
 });
 
+
+
 Template.selectType.onCreated(function selectTypeOnCreated() {
-  API.speecher.say('what game do you want to play??')
+  API.speecher.say('what game do you want to play??', false, () => {
+    API.recognizer.startListening(acceptVoiceCommand);
+  })
+});
+
+Template.selectType.onDestroyed(function selectNameOnDestroyed() {
+  API.recognizer.stopListening();
 });
 
 Template.selectType.events({
   'click [data-select-all-vs-all]'(event, instance) {
+    API.speecher.say('yeay, party play!');
+
     Session.set({
       selectedType: 'all-vs-all',
       selectState: 4
@@ -123,6 +137,7 @@ Template.selectType.events({
 
   },
   'click [data-select-animal-vs-all]'(event, instance) {
+    API.speecher.say('all versus me.');
     Session.set({
       selectedType: 'animal-vs-all',
     });
@@ -131,7 +146,13 @@ Template.selectType.events({
 });
 
 Template.addPlayers.onCreated(function addPlayersOnCreated() {
-  API.speecher.say('Add Players!')
+  API.speecher.say('Who do you want to play with?', false, () => {
+    API.recognizer.startListening(acceptVoiceCommand, () => {
+      API.recognizer.startListening(acceptVoiceCommand, () => {
+        API.recognizer.startListening(acceptVoiceCommand);
+      })
+    });
+  })
 });
 
 
@@ -175,6 +196,17 @@ function acceptVoiceCommand(a) {
         return;
     }
 
+    if (helper.state4()) {
+        if(a === 'done') {
+          document.querySelector("[data-done]").click();
+        }
+        document.querySelector(".addPlayers > input").value = a;
+        document.querySelector("[data-enter-name]").className = "";
+        document.querySelector("[data-done]").className = "";
+        document.querySelector("[data-enter-name]").click();
+        return;
+    }
+
     const c = tryFindCommand(a.toLowerCase(), getCommands());
     if (c) {
         c();
@@ -187,22 +219,33 @@ function acceptVoiceCommand(a) {
 function getCommands() {
     if (helper.state1()) {
         return {
-            "first": () => { 
+            "tipsy": () => {
                 console.log("tipsy");
-                document.querySelector("[data-name='Tipsy']").click();
+                document.querySelector("[data-name='tipsy']").click();
             },
-            "second": () => { 
+            "flipsy": () => {
                 console.log("flipsy");
-                document.querySelector("[data-name='Flipsy']").click();
+                document.querySelector("[data-name='flipsy']").click();
             },
-            "third": () => { 
+            "mipsy": () => {
                 console.log("MIPSY");
-                document.querySelector("[data-name='Mipsy']").click();
+                document.querySelector("[data-name='mipsy']").click();
             },
         };
     } else if (helper.state2()) {
         return {
-            
+
         }
+    } else if (helper.state3()) {
+        return {
+          "all vs. all": () => {
+              console.log('all vs all')
+              document.querySelector("[data-select-all-vs-all").click();
+          },
+          "Piximal vs all": () => {
+              console.log("flipsy");
+              document.querySelector("data-select-animal-vs-all").click();
+          }
+        };
     }
 }

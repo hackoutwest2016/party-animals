@@ -46,7 +46,7 @@
     <br>
     <button data-select-all-vs-all>All vs. All</button>
     <p>or</p>
-    <button data-select-animal-vs-all > Me vs. All</button>
+    <button data-select-animal-vs-all > Piximal vs. All</button>
   </section>
 </template>
 
@@ -56,7 +56,7 @@
     {{#each players}}
       <p>{{this}}</p>
     {{/each}}
-    <input placeholder="Enter a name" />
+    <input placeholder="Enter a name" data-player-name/>
     <button data-enter-name class="disabled">Add</button>
     <button data-done>Done</button>
     <hr>

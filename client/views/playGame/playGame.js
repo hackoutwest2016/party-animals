@@ -8,16 +8,17 @@ import { Games } from "../../../both/collections/Games";
 
 Template.playGame.onCreated(function playGameOnCreated() {
     console.log("in playGame", this.data);
+    setTimeout(() => {
+      Session.set("currentGame", this.data.game._id);
+      let apa;
+      if (this.data.game.type === "animal-vs-all") {
+          apa = new ContinuousParty(this.data.game);
+      } else {
+          apa = new PartyRound(this.data.game);
+      }
 
-    Session.set("currentGame", this.data.game._id);
-    let apa;
-    if (this.data.game.type === "animal-vs-all") {
-        apa = new ContinuousParty(this.data.game);
-    } else {
-        apa = new PartyRound(this.data.game);
-    }
-
-    apa.start();
+      apa.start();
+    }, 2000);
 });
 
 

@@ -1,7 +1,7 @@
 window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition || null;
 
 export class Recognizer {
-    startListening(onUserInput) {
+    startListening(onUserInput, onEnd) {
         if (this.recognizer) {
             console.error("We're already listening, something is probably wrong");
             return;
@@ -15,6 +15,7 @@ export class Recognizer {
         };
         this.recognizer.onend = function() {
             console.debug("Recognition ended");
+            if(onEnd) onEnd();
         };
         this.recognizer.onerror = (event) => {
             console.debug("Recognition error!", event);
@@ -35,7 +36,7 @@ export class Recognizer {
 
                 const currentMillis = new Date().getTime();
                 const millisSince = currentMillis - this.lastResult.timestamp;
-                if (millisSince >= 2000) {
+                if (millisSince >= 5000) {
                     this.lastResult.fired = true;
                     this.stopListening();
                     console.debug("This is taking too loooooong, firing event even though the API isn't sure what is said");
