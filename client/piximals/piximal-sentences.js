@@ -53,7 +53,7 @@ const apa = {
     "fallback": {
         "new-game": "We're starting a new game! Wii-ii-iii-iii",
         "answer-correct": ["{answer} was correct! You are leet indeed", "That's right! It was {answer}. Way to go!", "Oooh yeeaaaah! {anwser}!"],
-        "answer-wrong": ["Nah, {answer} was not right", "Sadly {answer} was wrong", "Did you really think the anwser was {answer}? Better shape up", "A deaf table has more correct answers than you, {anwser} was not right", "I regret to inform you that {answer} is wrong"],
+        "answer-wrong": ["Nah, {answer} was not right", "Sadly {answer} was wrong", "Did you really think the anwser was {answer}? Better shape up", "A deaf table has more correct answers than you, {answer} was not right", "I regret to inform you that {answer} is wrong"],
         "question-failed": "Time's up! {answer} was the correct answer. You fail",
         "game-over": "Game over!",
         "next-player": "Okay, time for {player}",
