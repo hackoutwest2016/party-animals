@@ -3,6 +3,11 @@ Router.route('/', function () {
   this.render('splash')
 });
 
+Router.route('/welcome', function () {
+  this.layout('defaultLayout');
+  this.render('welcome')
+});
+
 Router.route('/subs', function () {
   this.layout('defaultLayout');
   this.render('subs')

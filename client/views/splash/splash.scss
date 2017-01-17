@@ -1,3 +1,16 @@
 .splash {
   min-height:100vh;
 }
+
+
+@keyframes fadeOut {
+  0%   { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+.welcome {
+   animation: fadeOut;
+   animation-delay: 5s;
+   animation-duration: 2s;
+   animation-fill-mode: forwards;
+}
